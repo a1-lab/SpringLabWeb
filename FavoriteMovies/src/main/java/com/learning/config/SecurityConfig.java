@@ -12,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
+//Чтобы не делать дополнительный проект для различных типов аутентификации
+//будем перенастраивать SecurityConfig
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -28,13 +31,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // Конфигурация с custom login формой
+//        http.authorizeRequests().antMatchers("/",
+//                "/index", "/login").permitAll().
+//                antMatchers("/**").hasAnyRole("ADMIN").
+//                and().formLogin().loginPage("/login").permitAll().
+//                failureHandler(new CustomAuthenticationFailureHandler()).
+//                and().logout().logoutSuccessUrl("/welcome").permitAll().
+//                and().csrf().disable();
+
+        // Конфигурация с BasicHttp аунтефикацией
         http.authorizeRequests().antMatchers("/",
                 "/index", "/login").permitAll().
                 antMatchers("/**").hasAnyRole("ADMIN").
-                and().formLogin().loginPage("/login").permitAll().
-                failureHandler(new CustomAuthenticationFailureHandler()).
+                and().httpBasic().
                 and().logout().logoutSuccessUrl("/welcome").permitAll().
                 and().csrf().disable();
+
     }
 
     @Bean
