@@ -1,0 +1,6 @@
+1. Run request - Google ARC app
+2. login request:
+   http://localhost:8080/HelloRestServiceWithSecurity-1.0-SNAPSHOT/api/v1/auth/login
+   method: post
+   content type: application/json
+   body: {"username":"admin","password":"admin"}
